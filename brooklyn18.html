@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Important Birthday Notice</title>
+<style>
+  :root { --ink:#171717; --paper:#fffdf7; --red:#e63946; --muted:#666; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; min-height:100vh; display:grid; place-items:center; padding:20px;
+    background:repeating-linear-gradient(135deg,#f2eee5 0 12px,#e8e1d5 12px 24px);
+    color:var(--ink); font-family:Arial,Helvetica,sans-serif;
+  }
+  .page {
+    width:min(100%,620px); background:var(--paper); border:3px solid var(--ink);
+    box-shadow:9px 9px 0 var(--ink); padding:clamp(20px,5vw,38px); position:relative;
+  }
+  .stamp { display:inline-block; border:2px solid var(--red); color:var(--red); padding:6px 9px; font-size:11px; font-weight:900; letter-spacing:2px; transform:rotate(-4deg); }
+  .tiny { text-transform:uppercase; letter-spacing:3px; font-size:11px; font-weight:800; margin-top:22px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(34px,8vw,60px); line-height:.95; margin:12px 0; letter-spacing:-2px; }
+  .rule { height:4px; background:var(--ink); margin:18px 0; }
+  .notice { color:var(--muted); font-size:13px; line-height:1.5; }
+  #message { min-height:100px; display:grid; place-items:center; text-align:center; font-size:clamp(19px,4vw,27px); font-weight:900; line-height:1.25; padding:20px 0; }
+  #sub { text-align:center; color:var(--muted); min-height:42px; font-size:14px; line-height:1.4; }
+  button {
+    appearance:none; border:3px solid var(--ink); background:var(--red); color:white; font-weight:900;
+    font-size:16px; padding:15px 20px; width:100%; cursor:pointer; box-shadow:5px 5px 0 var(--ink);
+    margin-top:18px; transition:transform .08s,box-shadow .08s;
+  }
+  button:active { transform:translate(4px,4px); box-shadow:1px 1px 0 var(--ink); }
+  .footer { display:flex; justify-content:space-between; gap:10px; margin-top:28px; border-top:1px solid #aaa; padding-top:12px; font-size:10px; text-transform:uppercase; letter-spacing:1px; color:#555; }
+  .bar { height:8px; border:1px solid var(--ink); margin-top:8px; }
+  #progress { height:100%; width:0%; background:var(--red); transition:width .2s; }
+  .confetti { font-size:30px; letter-spacing:8px; text-align:center; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="stamp">OFFICIAL NOTICE</div>
+  <div class="tiny">Department of Unnecessary Announcements</div>
+  <h1>PLEASE READ.<br>IT'S IMPORTANT.</h1>
+  <div class="rule"></div>
+  <p class="notice">A message has been prepared for Brooklyn. Unfortunately, it has been trapped behind a completely reasonable number of steps.</p>
+  <div class="bar"><div id="progress"></div></div>
+  <div id="message" aria-live="polite">Brooklyn has turned 18.</div>
+  <div id="sub">Please press the button to acknowledge this historic administrative inconvenience.</div>
+  <button id="next">CONTINUE →</button>
+  <div id="final" class="hidden">
+    <div class="confetti">🎂 🎉 🫡</div>
+    <div class="rule"></div>
+    <h1 style="font-size:clamp(30px,7vw,48px)">HAPPY 18TH, BROOKLYN.</h1>
+    <p style="font-weight:800">Same guy. Bigger number. Please manage expectations accordingly.</p>
+    <p class="notice">This concludes the official birthday procedure. You may now return to whatever questionable activity you were doing.</p>
+  </div>
+  <div class="footer"><span>Case no. B-018</span><span>Urgency: unnecessarily high</span></div>
+</main>
+<script>
+const steps = [
+  ["Brooklyn has turned 18.", "Please press the button to acknowledge this historic administrative inconvenience.", "CONTINUE →"],
+  ["Thank you. Your acknowledgement has been acknowledged.", "The department appreciates your cooperation. It has no further information.", "NEXT, I GUESS →"],
+  ["Wait. We forgot to wish you happy birthday.", "Classic administrative failure. Please continue.", "FIX THE ERROR →"],
+  ["Happy birthday, Brooklyn.", "That was the message. Unfortunately, the system requires one more click.", "ONE MORE CLICK →"],
+  ["Actually, two more clicks.", "We regret to inform you that the button department is in charge.", "THIS IS GETTING OLD →"],
+  ["You are now 18% through this process.", "That statistic is completely made up. Keep going.", "I'M STILL HERE →"],
+  ["Final check: are you mature now?", "Select the only answer our system will accept.", "NO, NEXT →"],
+  ["Processing birthday...", "Please do not close this page. We have absolutely no reason for saying that.", "SHOW ME THE WISH →"]
+];
+let index = 0;
+const message = document.getElementById("message");
+const sub = document.getElementById("sub");
+const button = document.getElementById("next");
+const progress = document.getElementById("progress");
+const final = document.getElementById("final");
+button.addEventListener("click", () => {
+  if (index < steps.length - 1) {
+    index++;
+    message.textContent = steps[index][0];
+    sub.textContent = steps[index][1];
+    button.textContent = steps[index][2];
+    progress.style.width = Math.round((index / steps.length) * 100) + "%";
+  } else {
+    message.classList.add("hidden");
+    sub.classList.add("hidden");
+    button.classList.add("hidden");
+    final.classList.remove("hidden");
+    progress.style.width = "100%";
+    document.querySelector(".stamp").textContent = "CASE CLOSED";
+    document.querySelector(".tiny").textContent = "Department of Unnecessary Announcements";
+  }
+});
+</script>
+</body>
+</html>
